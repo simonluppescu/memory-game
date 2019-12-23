@@ -8,4 +8,8 @@ export type RevealCardAction = {
   cardId: number;
 };
 
-export type AppActions = RevealCardAction;
+export type HideCardAction = {
+  type: ActionNames.HIDE_CARDS;
+};
+
+export type AppActions = RevealCardAction | HideCardAction;

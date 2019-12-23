@@ -10,6 +10,11 @@ const cardReducer = (state = defaultState, action: AppActions): typeof defaultSt
         newState.revealedCards.add(action.cardId);
       });
 
+    case ActionNames.HIDE_CARDS:
+      return produce(state, (newState) => {
+        newState.revealedCards.clear();
+      });
+
     default:
       return state;
   }

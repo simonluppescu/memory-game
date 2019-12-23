@@ -5,6 +5,8 @@ import { EnglishCardData, JapaneseCardData } from "../types/goalItems";
 import { Language } from "../types/general";
 
 class DataProcessorService {
+  static readonly NUM_PAIRS = 10;
+
   englishItems: Array<EnglishCardData>;
   japaneseItems: Array<JapaneseCardData>;
   shuffledItems: Array<EnglishCardData | JapaneseCardData>;
@@ -28,7 +30,9 @@ class DataProcessorService {
     const englishItems: Array<EnglishCardData> = [];
     const japaneseItems: Array<JapaneseCardData> = [];
 
-    goalItems.goal_items.forEach((goalItem: any, index: number) => {
+    for (let index = 0; index < DataProcessorService.NUM_PAIRS; index++) {
+      const goalItem = goalItems.goal_items[index];
+
       englishItems.push({
         language: Language.ENGLISH,
         matcherId: index,
@@ -44,7 +48,7 @@ class DataProcessorService {
         japaneseHira: goalItem.item.response.transliterations.Hira,
         japaneseLatin: goalItem.item.response.transliterations.Latn
       });
-    });
+    }
 
     return { englishItems, japaneseItems };
   }

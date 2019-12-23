@@ -15,7 +15,6 @@ class Card extends React.PureComponent<Props> {
   render() {
     const { itemData, isRevealed, handleRevealCard } = this.props;
 
-    console.log("Rendering Card");
     let content;
     if (itemData.language === Language.ENGLISH) {
       content = (
