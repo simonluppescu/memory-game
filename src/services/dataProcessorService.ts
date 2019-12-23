@@ -32,12 +32,14 @@ class DataProcessorService {
       englishItems.push({
         language: Language.ENGLISH,
         matcherId: index,
+        cardId: 2 * index,
         englishText: goalItem.item.cue.text,
         englishPartOfSpeech: goalItem.item.cue.part_of_speech
       });
       japaneseItems.push({
         language: Language.JAPANESE,
         matcherId: index,
+        cardId: 2 * index + 1,
         japaneseText: goalItem.item.response.text,
         japaneseHira: goalItem.item.response.transliterations.Hira,
         japaneseLatin: goalItem.item.response.transliterations.Latn

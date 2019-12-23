@@ -3,6 +3,7 @@ import { Language } from "./general";
 export type EnglishCardData = {
   language: Language.ENGLISH;
   matcherId: number;
+  cardId: number;
   englishText: string;
   englishPartOfSpeech: string;
 };
@@ -10,6 +11,7 @@ export type EnglishCardData = {
 export type JapaneseCardData = {
   language: Language.JAPANESE;
   matcherId: number;
+  cardId: number;
   japaneseText: string;
   japaneseHira: string;
   japaneseLatin: string;
