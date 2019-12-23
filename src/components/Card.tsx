@@ -6,31 +6,47 @@ import { EnglishCardData, JapaneseCardData } from "../types/goalItems";
 import { Language } from "../types/general";
 
 interface Props {
+  isRevealed: boolean;
   itemData: EnglishCardData | JapaneseCardData;
+  handleRevealCard: (cardId: number) => void;
 }
 
-const Card: React.FC<Props> = (props) => {
-  let content;
-  if (props.itemData.language === Language.ENGLISH) {
-    content = (
-      <>
-        {props.itemData.englishText}
-        <br />
-        {props.itemData.englishPartOfSpeech}
-      </>
-    );
-  } else if (props.itemData.language === Language.JAPANESE) {
-    content = (
-      <>
-        {props.itemData.japaneseText}
-        <br />
-        {props.itemData.japaneseHira}
-        <br />
-        {props.itemData.japaneseLatin}
-      </>
+class Card extends React.PureComponent<Props> {
+  render() {
+    const { itemData, isRevealed, handleRevealCard } = this.props;
+
+    console.log("Rendering Card");
+    let content;
+    if (itemData.language === Language.ENGLISH) {
+      content = (
+        <>
+          {itemData.englishText}
+          <br />
+          {itemData.englishPartOfSpeech}
+        </>
+      );
+    } else if (itemData.language === Language.JAPANESE) {
+      content = (
+        <>
+          {itemData.japaneseText}
+          <br />
+          {itemData.japaneseHira}
+          <br />
+          {itemData.japaneseLatin}
+        </>
+      );
+    }
+    return (
+      <div
+        className="card"
+        onClick={() => {
+          handleRevealCard(itemData.cardId);
+        }}
+      >
+        {isRevealed && content}
+      </div>
     );
   }
-  return <div className="card">{content}</div>;
-};
+}
 
 export default Card;

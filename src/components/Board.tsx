@@ -1,6 +1,7 @@
 import React from "react";
 import DataProcessorService from "../services/dataProcessorService";
-import Card from "./Card";
+
+import CardContainer from "../containers/CardContainer";
 
 interface Props {}
 
@@ -11,7 +12,7 @@ const Board: React.FC<Props> = () => {
   return (
     <div className="board">
       {dataProcessor.shuffledItems.map((item, index) => (
-        <Card key={index} itemData={item}></Card>
+        <CardContainer key={index} itemData={item}></CardContainer>
       ))}
     </div>
   );
