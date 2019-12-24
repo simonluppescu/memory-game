@@ -16,3 +16,5 @@ export type JapaneseCardData = {
   japaneseHira: string;
   japaneseLatin: string;
 };
+
+export type CardData = EnglishCardData | JapaneseCardData;

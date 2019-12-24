@@ -1,7 +1,7 @@
 import shuffle from "shuffle-array";
 
 import goalItems from "../data/goal.json";
-import { EnglishCardData, JapaneseCardData } from "../types/goalItems";
+import { EnglishCardData, JapaneseCardData, CardData } from "../types/goalItems";
 import { Language } from "../types/general";
 
 class DataProcessorService {
@@ -9,7 +9,7 @@ class DataProcessorService {
 
   englishItems: Array<EnglishCardData>;
   japaneseItems: Array<JapaneseCardData>;
-  shuffledItems: Array<EnglishCardData | JapaneseCardData>;
+  shuffledItems: Array<CardData>;
 
   constructor() {
     const items = this._initializeItems();
@@ -20,7 +20,7 @@ class DataProcessorService {
     this.shuffledItems = this._getShuffledCardData();
   }
 
-  private _getShuffledCardData(): Array<EnglishCardData | JapaneseCardData> {
+  private _getShuffledCardData(): Array<CardData> {
     const allCards = [...this.englishItems, ...this.japaneseItems];
 
     return shuffle(allCards);
