@@ -2,18 +2,18 @@ import React from "react";
 
 import "../styles/card.scss";
 
-import { EnglishCardData, JapaneseCardData } from "../types/goalItems";
+import { CardData } from "../types/goalItems";
 import { Language } from "../types/general";
 
 interface Props {
-  isRevealed: boolean;
-  itemData: EnglishCardData | JapaneseCardData;
-  handleRevealCard: (cardId: number) => void;
+  isFlippedOver: boolean;
+  itemData: CardData;
+  handleRevealCard: (cardData: CardData) => void;
 }
 
 class Card extends React.PureComponent<Props> {
   render() {
-    const { itemData, isRevealed, handleRevealCard } = this.props;
+    const { itemData, isFlippedOver, handleRevealCard } = this.props;
 
     let content;
     if (itemData.language === Language.ENGLISH) {
@@ -35,15 +35,15 @@ class Card extends React.PureComponent<Props> {
         </>
       );
     }
-    return (
+    return isFlippedOver ? (
+      <div className="card revealed">{content}</div>
+    ) : (
       <div
         className="card"
         onClick={() => {
-          handleRevealCard(itemData.cardId);
+          handleRevealCard(itemData);
         }}
-      >
-        {isRevealed && content}
-      </div>
+      ></div>
     );
   }
 }

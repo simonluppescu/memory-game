@@ -1,47 +1,58 @@
 import React from "react";
-import { connect } from "react-redux";
-import { AppState } from "../store/configureStore";
-
-import Card from "../components/Card";
-import { EnglishCardData, JapaneseCardData } from "../types/goalItems";
 import { Dispatch } from "redux";
-import { revealCard, hideCards } from "../actions";
+import { connect } from "react-redux";
+
+import { AppState } from "../store/configureStore";
+import Card from "../components/Card";
+import { CardData } from "../types/goalItems";
+import { revealCard, hideCards, setUsed } from "../actions";
 
 type StateProps = {
-  revealedCards: Set<number>;
+  revealedCards: Map<number, CardData>;
+  usedCards: Set<number>;
 };
 type OwnProps = {
-  itemData: EnglishCardData | JapaneseCardData;
+  itemData: CardData;
 };
 type DispatchProps = {
-  handleRevealCard: (cardId: number, revealedCards: Set<number>) => void;
+  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>) => void;
 };
 type Props = StateProps & OwnProps & DispatchProps;
 
 const CardContainer: React.FC<Props> = (props) => {
+  const { revealedCards, usedCards, itemData } = props;
+  const { cardId } = itemData;
+
   return (
     <Card
-      isRevealed={props.revealedCards.has(props.itemData.cardId)}
-      itemData={props.itemData}
-      handleRevealCard={(cardId: number) => {
-        props.handleRevealCard(cardId, props.revealedCards);
+      isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
+      itemData={itemData}
+      handleRevealCard={(cardData: CardData) => {
+        props.handleRevealCard(cardData, revealedCards);
       }}
     ></Card>
   );
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-  revealedCards: state.cardData.revealedCards
+  revealedCards: state.cardData.revealedCards,
+  usedCards: state.cardData.usedCards
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  handleRevealCard: (cardId: number, revealedCards: Set<number>): void => {
-    if (revealedCards.size <= 1) dispatch(revealCard(cardId));
+  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>): void => {
+    if (revealedCards.size <= 1) dispatch(revealCard(cardData));
 
     if (revealedCards.size === 1) {
-      setTimeout(() => {
+      const revealedCardData = revealedCards.values().next().value as CardData;
+      if (revealedCardData.matcherId === cardData.matcherId) {
+        dispatch(setUsed([revealedCardData.cardId, cardData.cardId]));
         dispatch(hideCards());
-      }, 1000);
+      } else {
+        setTimeout(() => {
+          dispatch(hideCards());
+        }, 1000);
+      }
     }
   }
 });
