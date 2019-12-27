@@ -1,4 +1,11 @@
-import { RevealCardAction, ActionNames, HideCardAction, SetUsedAction } from "../types/actionData";
+import {
+  RevealCardAction,
+  ActionNames,
+  HideCardAction,
+  SetUsedAction,
+  IncrementFlipsAction,
+  IncrementTimeAction
+} from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
 export const revealCard = (cardData: CardData): RevealCardAction => ({
@@ -13,4 +20,12 @@ export const hideCards = (): HideCardAction => ({
 export const setUsed = (cardIds: Array<number>): SetUsedAction => ({
   type: ActionNames.SET_USED,
   cardIds
+});
+
+export const incrementFlips = (): IncrementFlipsAction => ({
+  type: ActionNames.INCREMENT_FLIPS
+});
+
+export const incrementTime = (): IncrementTimeAction => ({
+  type: ActionNames.INCREMENT_TIME
 });
