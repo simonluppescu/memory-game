@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { AppState } from "../store/configureStore";
 import Card from "../components/Card";
 import { CardData } from "../types/goalItems";
-import { revealCard, hideCards, setUsed } from "../actions";
+import { revealCard, hideCards, setUsed, incrementFlips } from "../actions";
 
 type StateProps = {
   revealedCards: Map<number, CardData>;
@@ -44,6 +44,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     if (revealedCards.size <= 1) dispatch(revealCard(cardData));
 
     if (revealedCards.size === 1) {
+      dispatch(incrementFlips());
+
       const revealedCardData = revealedCards.values().next().value as CardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
         dispatch(setUsed([revealedCardData.cardId, cardData.cardId]));

@@ -3,7 +3,9 @@ import { CardData } from "./goalItems";
 export enum ActionNames {
   REVEAL_CARD = "REVEAL_CARD",
   HIDE_CARDS = "HIDE_CARDS",
-  SET_USED = "SET_USED"
+  SET_USED = "SET_USED",
+  INCREMENT_FLIPS = "INCREMENT_FLIPS",
+  INCREMENT_TIME = "INCREMENT_TIME"
 }
 
 export type RevealCardAction = {
@@ -20,4 +22,12 @@ export type SetUsedAction = {
   cardIds: Array<number>;
 };
 
-export type AppActions = RevealCardAction | HideCardAction | SetUsedAction;
+export type IncrementFlipsAction = {
+  type: ActionNames.INCREMENT_FLIPS;
+};
+
+export type IncrementTimeAction = {
+  type: ActionNames.INCREMENT_TIME;
+};
+
+export type AppActions = RevealCardAction | HideCardAction | SetUsedAction | IncrementFlipsAction | IncrementTimeAction;
