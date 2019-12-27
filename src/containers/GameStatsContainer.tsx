@@ -18,11 +18,13 @@ type DispatchProps = {
 type Props = StateProps & DispatchProps;
 
 const GameStatsContainer: React.FC<Props> = (props) => {
+  const { incrementTime } = props;
+
   useEffect(() => {
     setInterval(() => {
-      props.incrementTime();
+      incrementTime();
     }, 1000);
-  }, []);
+  }, [incrementTime]);
 
   return (
     <div className="game-stats">
