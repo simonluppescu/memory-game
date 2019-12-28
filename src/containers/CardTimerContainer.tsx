@@ -20,7 +20,7 @@ type Props = StateProps & DispatchProps;
 
 const CardTimerContainer: React.FC<Props> = (props) => {
   let content = null;
-  if (props.revealedCards.size === 1 && !props.isGameOver)
+  if (props.revealedCards.size === 1 && !props.isGameOver) {
     content = (
       <CardTimer
         percent={props.percent}
@@ -28,6 +28,9 @@ const CardTimerContainer: React.FC<Props> = (props) => {
         handleResetTimer={props.handleResetTimer}
       />
     );
+  } else {
+    content = <div className="card-timer-placeholder"></div>;
+  }
 
   return content;
 };

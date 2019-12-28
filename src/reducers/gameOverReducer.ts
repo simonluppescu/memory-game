@@ -1,7 +1,7 @@
 import { AppActions, ActionNames } from "../types/actionData";
 
 const defaultState = false;
-const gameReducer = (state = defaultState, action: AppActions): boolean => {
+const gameOverReducer = (state = defaultState, action: AppActions): boolean => {
   switch (action.type) {
     case ActionNames.END_GAME:
       return true;
@@ -11,4 +11,4 @@ const gameReducer = (state = defaultState, action: AppActions): boolean => {
   }
 };
 
-export default gameReducer;
+export default gameOverReducer;
