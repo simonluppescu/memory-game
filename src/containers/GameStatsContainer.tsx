@@ -11,20 +11,26 @@ import TimeService from "../services/timeService";
 type StateProps = {
   numFlips: number;
   secondsElapsed: number;
+  isGameOver: boolean;
 };
 type DispatchProps = {
   incrementTime: () => void;
 };
 type Props = StateProps & DispatchProps;
 
+let timer: NodeJS.Timeout;
 const GameStatsContainer: React.FC<Props> = (props) => {
-  const { incrementTime } = props;
+  const { incrementTime, isGameOver } = props;
 
   useEffect(() => {
-    setInterval(() => {
-      incrementTime();
-    }, 1000);
-  }, [incrementTime]);
+    if (isGameOver) {
+      clearInterval(timer);
+    } else {
+      timer = setInterval(() => {
+        incrementTime();
+      }, 1000);
+    }
+  }, [incrementTime, isGameOver]);
 
   return (
     <div className="game-stats">
@@ -35,7 +41,8 @@ const GameStatsContainer: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState): StateProps => ({
   numFlips: state.numFlips,
-  secondsElapsed: state.secondsElapsed
+  secondsElapsed: state.secondsElapsed,
+  isGameOver: state.isGameOver
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({

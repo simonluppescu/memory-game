@@ -7,7 +7,8 @@ export enum ActionNames {
   INCREMENT_FLIPS = "INCREMENT_FLIPS",
   INCREMENT_TIME = "INCREMENT_TIME",
   COUNT_DOWN_TIMER = "COUNT_DOWN_TIMER",
-  RESET_TIMER = "RESET_TIMER"
+  RESET_TIMER = "RESET_TIMER",
+  END_GAME = "END_GAME"
 }
 
 export type RevealCardAction = {
@@ -40,6 +41,10 @@ export type ResetTimerAction = {
   type: ActionNames.RESET_TIMER;
 };
 
+export type EndGameAction = {
+  type: ActionNames.END_GAME;
+};
+
 export type AppActions =
   | RevealCardAction
   | HideCardAction
@@ -47,4 +52,5 @@ export type AppActions =
   | IncrementFlipsAction
   | IncrementTimeAction
   | CountDownTimerAction
-  | ResetTimerAction;
+  | ResetTimerAction
+  | EndGameAction;
