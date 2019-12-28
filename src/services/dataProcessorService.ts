@@ -16,11 +16,8 @@ class DataProcessorService {
     const japaneseItems = items.japaneseItems;
 
     this.allItems = [...englishItems, ...japaneseItems];
-    this.shuffledItems = this._getShuffledCardData(this.allItems);
-  }
-
-  private _getShuffledCardData(items: Array<CardData>): Array<CardData> {
-    return shuffle(items);
+    this.shuffledItems = this.allItems.slice();
+    shuffle(this.shuffledItems);
   }
 
   private _initializeItems(): { englishItems: Array<EnglishCardData>; japaneseItems: Array<JapaneseCardData> } {
