@@ -3,6 +3,10 @@ import { Line } from "rc-progress";
 
 import "../styles/card-timer.scss";
 
+const NUM_SECONDS = 3;
+const MS_IN_SEC = 1000;
+const TOTAL_PERCENT = 100;
+
 interface Props {
   percent: number;
   handleCountDown: (currPercent: number) => void;
@@ -17,7 +21,7 @@ export default class CardTimer extends React.Component<Props, State> {
     this.setState({
       timer: setInterval(() => {
         this.props.handleCountDown(this.props.percent);
-      }, 100)
+      }, NUM_SECONDS * (MS_IN_SEC / TOTAL_PERCENT))
     });
   }
 
@@ -28,7 +32,7 @@ export default class CardTimer extends React.Component<Props, State> {
   }
 
   render() {
-    const numSeconds = Math.ceil(this.props.percent / 10);
+    const numSeconds = Math.ceil(this.props.percent / (TOTAL_PERCENT / NUM_SECONDS));
     return (
       <div className="card-timer">
         <span className="num-sec-left">
