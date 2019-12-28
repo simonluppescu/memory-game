@@ -29,6 +29,13 @@ const cardReducer = (state = defaultState, action: AppActions): CardReducerState
         });
       });
 
+    case ActionNames.SET_REVEALED:
+      return produce(state, (newState) => {
+        action.cards.forEach((card) => {
+          newState.revealedCards.set(card.cardId, card);
+        });
+      });
+
     case ActionNames.INCREMENT_MATCHES:
       return produce(state, (newState) => {
         newState.numPairsMatched += 1;

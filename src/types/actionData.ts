@@ -4,6 +4,7 @@ export enum ActionNames {
   REVEAL_CARD = "REVEAL_CARD",
   HIDE_CARDS = "HIDE_CARDS",
   SET_USED = "SET_USED",
+  SET_REVEALED = "SET_REVEALED",
   INCREMENT_MATCHES = "INCREMENT_MATCHES",
   INCREMENT_FLIPS = "INCREMENT_FLIPS",
   INCREMENT_TIME = "INCREMENT_TIME",
@@ -19,6 +20,11 @@ export type RevealCardAction = {
 
 export type HideCardAction = {
   type: ActionNames.HIDE_CARDS;
+};
+
+export type SetRevealedAction = {
+  type: ActionNames.SET_REVEALED;
+  cards: Array<CardData>;
 };
 
 export type SetUsedAction = {
@@ -54,6 +60,7 @@ export type AppActions =
   | RevealCardAction
   | HideCardAction
   | SetUsedAction
+  | SetRevealedAction
   | IncrementMatchesAction
   | IncrementFlipsAction
   | IncrementTimeAction
