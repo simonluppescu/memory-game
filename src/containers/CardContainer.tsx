@@ -10,17 +10,18 @@ import { revealCard, hideCards, setUsed, incrementFlips } from "../actions";
 type StateProps = {
   revealedCards: Map<number, CardData>;
   usedCards: Set<number>;
+  isGameOver: boolean;
 };
 type OwnProps = {
   itemData: CardData;
 };
 type DispatchProps = {
-  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>) => void;
+  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>, isGameOver: boolean) => void;
 };
 type Props = StateProps & OwnProps & DispatchProps;
 
 const CardContainer: React.FC<Props> = (props) => {
-  const { revealedCards, usedCards, itemData } = props;
+  const { revealedCards, usedCards, itemData, isGameOver } = props;
   const { cardId } = itemData;
 
   return (
@@ -28,7 +29,7 @@ const CardContainer: React.FC<Props> = (props) => {
       isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
       itemData={itemData}
       handleRevealCard={(cardData: CardData) => {
-        props.handleRevealCard(cardData, revealedCards);
+        props.handleRevealCard(cardData, revealedCards, isGameOver);
       }}
     ></Card>
   );
@@ -36,11 +37,14 @@ const CardContainer: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState): StateProps => ({
   revealedCards: state.cardData.revealedCards,
-  usedCards: state.cardData.usedCards
+  usedCards: state.cardData.usedCards,
+  isGameOver: state.isGameOver
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>): void => {
+  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>, isGameOver: boolean): void => {
+    if (isGameOver) return;
+
     if (revealedCards.size <= 1) dispatch(revealCard(cardData));
 
     if (revealedCards.size === 1) {

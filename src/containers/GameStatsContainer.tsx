@@ -20,7 +20,7 @@ type Props = StateProps & DispatchProps;
 
 let timer: NodeJS.Timeout;
 const GameStatsContainer: React.FC<Props> = (props) => {
-  const { incrementTime, isGameOver } = props;
+  const { numFlips, secondsElapsed, incrementTime, isGameOver } = props;
 
   useEffect(() => {
     if (isGameOver) {
@@ -34,7 +34,8 @@ const GameStatsContainer: React.FC<Props> = (props) => {
 
   return (
     <div className="game-stats">
-      Number of flips: {props.numFlips}, Time elapsed: {TimeService.convertToTime(props.secondsElapsed)}
+      Number of flips: {numFlips}, Time elapsed: {TimeService.convertToTime(secondsElapsed)}{" "}
+      {isGameOver && <span className="game-over">Game over!</span>}
     </div>
   );
 };

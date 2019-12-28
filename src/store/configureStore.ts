@@ -5,14 +5,14 @@ import cardReducer from "../reducers/cardReducer";
 import numFlipsReducer from "../reducers/numFlipsReducer";
 import timeElapsedReducer from "../reducers/timeElapsedReducer";
 import cardTimerReducer from "../reducers/cardTimerReducer";
-import gameReducer from "../reducers/gameReducer";
+import gameOverReducer from "../reducers/gameOverReducer";
 
 const rootReducer = combineReducers({
   cardData: cardReducer,
   numFlips: numFlipsReducer,
   secondsElapsed: timeElapsedReducer,
   cardTimer: cardTimerReducer,
-  isGameOver: gameReducer
+  isGameOver: gameOverReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
