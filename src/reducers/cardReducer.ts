@@ -5,9 +5,12 @@ import { CardData } from "../types/goalItems";
 
 const defaultState = {
   revealedCards: new Map<number, CardData>(),
-  usedCards: new Set<number>()
+  usedCards: new Set<number>(),
+  numPairsMatched: 0
 };
-const cardReducer = (state = defaultState, action: AppActions): typeof defaultState => {
+export type CardReducerState = typeof defaultState;
+
+const cardReducer = (state = defaultState, action: AppActions): CardReducerState => {
   switch (action.type) {
     case ActionNames.REVEAL_CARD:
       return produce(state, (newState) => {
@@ -24,6 +27,11 @@ const cardReducer = (state = defaultState, action: AppActions): typeof defaultSt
         action.cardIds.forEach((cardId) => {
           newState.usedCards.add(cardId);
         });
+      });
+
+    case ActionNames.INCREMENT_MATCHES:
+      return produce(state, (newState) => {
+        newState.numPairsMatched += 1;
       });
 
     default:
