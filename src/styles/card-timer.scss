@@ -1,0 +1,14 @@
+.card-timer {
+  display: flex;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.num-sec-left {
+  flex: 1;
+}
+
+.num-sec-progress {
+  flex: 3;
+  align-self: center;
+}

@@ -5,7 +5,9 @@ export enum ActionNames {
   HIDE_CARDS = "HIDE_CARDS",
   SET_USED = "SET_USED",
   INCREMENT_FLIPS = "INCREMENT_FLIPS",
-  INCREMENT_TIME = "INCREMENT_TIME"
+  INCREMENT_TIME = "INCREMENT_TIME",
+  COUNT_DOWN_TIMER = "COUNT_DOWN_TIMER",
+  RESET_TIMER = "RESET_TIMER"
 }
 
 export type RevealCardAction = {
@@ -30,4 +32,19 @@ export type IncrementTimeAction = {
   type: ActionNames.INCREMENT_TIME;
 };
 
-export type AppActions = RevealCardAction | HideCardAction | SetUsedAction | IncrementFlipsAction | IncrementTimeAction;
+export type CountDownTimerAction = {
+  type: ActionNames.COUNT_DOWN_TIMER;
+};
+
+export type ResetTimerAction = {
+  type: ActionNames.RESET_TIMER;
+};
+
+export type AppActions =
+  | RevealCardAction
+  | HideCardAction
+  | SetUsedAction
+  | IncrementFlipsAction
+  | IncrementTimeAction
+  | CountDownTimerAction
+  | ResetTimerAction;

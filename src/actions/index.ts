@@ -4,7 +4,9 @@ import {
   HideCardAction,
   SetUsedAction,
   IncrementFlipsAction,
-  IncrementTimeAction
+  IncrementTimeAction,
+  CountDownTimerAction,
+  ResetTimerAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -28,4 +30,12 @@ export const incrementFlips = (): IncrementFlipsAction => ({
 
 export const incrementTime = (): IncrementTimeAction => ({
   type: ActionNames.INCREMENT_TIME
+});
+
+export const countDownTimer = (): CountDownTimerAction => ({
+  type: ActionNames.COUNT_DOWN_TIMER
+});
+
+export const resetTimer = (): ResetTimerAction => ({
+  type: ActionNames.RESET_TIMER
 });
