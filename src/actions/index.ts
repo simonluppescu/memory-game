@@ -6,7 +6,8 @@ import {
   IncrementFlipsAction,
   IncrementTimeAction,
   CountDownTimerAction,
-  ResetTimerAction
+  ResetTimerAction,
+  EndGameAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -38,4 +39,8 @@ export const countDownTimer = (): CountDownTimerAction => ({
 
 export const resetTimer = (): ResetTimerAction => ({
   type: ActionNames.RESET_TIMER
+});
+
+export const endGame = (): EndGameAction => ({
+  type: ActionNames.END_GAME
 });
