@@ -4,13 +4,13 @@ import { Dispatch } from "redux";
 
 import { AppState } from "../store/configureStore";
 import CardTimer from "../components/CardTimer";
+import IsGameOverContext from "../contexts/IsGameOverContext";
 import { CardData } from "../types/goalItems";
 import { countDownTimer, resetTimer, endGame } from "../actions";
 
 type StateProps = {
   percent: number;
   revealedCards: Map<number, CardData>;
-  isGameOver: boolean;
 };
 type DispatchProps = {
   handleCountDown: (currPercent: number) => void;
@@ -34,8 +34,7 @@ const CardTimerContainer: React.FC<Props> = (props) => {
 
 const mapStateToProps = (state: AppState): StateProps => ({
   percent: state.cardTimer,
-  revealedCards: state.cardData.revealedCards,
-  isGameOver: state.isGameOver
+  revealedCards: state.cardData.revealedCards
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
