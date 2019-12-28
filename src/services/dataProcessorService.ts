@@ -5,25 +5,22 @@ import { EnglishCardData, JapaneseCardData, CardData } from "../types/goalItems"
 import { Language } from "../types/general";
 
 class DataProcessorService {
-  static readonly NUM_PAIRS = 10;
+  static readonly NUM_PAIRS = 4;
 
-  englishItems: Array<EnglishCardData>;
-  japaneseItems: Array<JapaneseCardData>;
+  allItems: Array<CardData>;
   shuffledItems: Array<CardData>;
 
   constructor() {
     const items = this._initializeItems();
+    const englishItems = items.englishItems;
+    const japaneseItems = items.japaneseItems;
 
-    this.englishItems = items.englishItems;
-    this.japaneseItems = items.japaneseItems;
-
-    this.shuffledItems = this._getShuffledCardData();
+    this.allItems = [...englishItems, ...japaneseItems];
+    this.shuffledItems = this._getShuffledCardData(this.allItems);
   }
 
-  private _getShuffledCardData(): Array<CardData> {
-    const allCards = [...this.englishItems, ...this.japaneseItems];
-
-    return shuffle(allCards);
+  private _getShuffledCardData(items: Array<CardData>): Array<CardData> {
+    return shuffle(items);
   }
 
   private _initializeItems(): { englishItems: Array<EnglishCardData>; japaneseItems: Array<JapaneseCardData> } {

@@ -4,13 +4,13 @@ import { Provider } from "react-redux";
 import "./styles/base.scss";
 
 import { store } from "./store/configureStore";
-import Board from "./components/Board";
+import BoardContainer from "./containers/BoardContainer";
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className="app">
-        <Board></Board>
+        <BoardContainer />
       </div>
     </Provider>
   );
