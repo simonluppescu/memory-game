@@ -4,24 +4,31 @@ import { connect } from "react-redux";
 
 import { AppState } from "../store/configureStore";
 import Card from "../components/Card";
+import { CardReducerState } from "../reducers/cardReducer";
 import { CardData } from "../types/goalItems";
-import { revealCard, hideCards, setUsed, incrementFlips } from "../actions";
+import { revealCard, hideCards, setUsed, incrementFlips, incrementMatches, endGame } from "../actions";
+import DataProcessorService from "../services/dataProcessorService";
 
 type StateProps = {
-  revealedCards: Map<number, CardData>;
-  usedCards: Set<number>;
+  allCardData: CardReducerState;
   isGameOver: boolean;
 };
 type OwnProps = {
   itemData: CardData;
 };
 type DispatchProps = {
-  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>, isGameOver: boolean) => void;
+  handleRevealCard: (
+    cardData: CardData,
+    revealedCards: Map<number, CardData>,
+    numPairsMatched: number,
+    isGameOver: boolean
+  ) => void;
 };
 type Props = StateProps & OwnProps & DispatchProps;
 
 const CardContainer: React.FC<Props> = (props) => {
-  const { revealedCards, usedCards, itemData, isGameOver } = props;
+  const { allCardData, itemData, isGameOver } = props;
+  const { revealedCards, usedCards, numPairsMatched } = allCardData;
   const { cardId } = itemData;
 
   return (
@@ -29,20 +36,24 @@ const CardContainer: React.FC<Props> = (props) => {
       isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
       itemData={itemData}
       handleRevealCard={(cardData: CardData) => {
-        props.handleRevealCard(cardData, revealedCards, isGameOver);
+        props.handleRevealCard(cardData, revealedCards, numPairsMatched, isGameOver);
       }}
     ></Card>
   );
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
-  revealedCards: state.cardData.revealedCards,
-  usedCards: state.cardData.usedCards,
+  allCardData: state.cardData,
   isGameOver: state.isGameOver
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  handleRevealCard: (cardData: CardData, revealedCards: Map<number, CardData>, isGameOver: boolean): void => {
+  handleRevealCard: (
+    cardData: CardData,
+    revealedCards: Map<number, CardData>,
+    numPairsMatched: number,
+    isGameOver: boolean
+  ): void => {
     if (isGameOver) return;
 
     if (revealedCards.size <= 1) dispatch(revealCard(cardData));
@@ -52,7 +63,10 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
       const revealedCardData = revealedCards.values().next().value as CardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
+        if (numPairsMatched === DataProcessorService.NUM_PAIRS - 1) dispatch(endGame());
+
         dispatch(setUsed([revealedCardData.cardId, cardData.cardId]));
+        dispatch(incrementMatches());
         dispatch(hideCards());
       } else {
         setTimeout(() => {

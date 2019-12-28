@@ -4,6 +4,7 @@ export enum ActionNames {
   REVEAL_CARD = "REVEAL_CARD",
   HIDE_CARDS = "HIDE_CARDS",
   SET_USED = "SET_USED",
+  INCREMENT_MATCHES = "INCREMENT_MATCHES",
   INCREMENT_FLIPS = "INCREMENT_FLIPS",
   INCREMENT_TIME = "INCREMENT_TIME",
   COUNT_DOWN_TIMER = "COUNT_DOWN_TIMER",
@@ -23,6 +24,10 @@ export type HideCardAction = {
 export type SetUsedAction = {
   type: ActionNames.SET_USED;
   cardIds: Array<number>;
+};
+
+export type IncrementMatchesAction = {
+  type: ActionNames.INCREMENT_MATCHES;
 };
 
 export type IncrementFlipsAction = {
@@ -49,6 +54,7 @@ export type AppActions =
   | RevealCardAction
   | HideCardAction
   | SetUsedAction
+  | IncrementMatchesAction
   | IncrementFlipsAction
   | IncrementTimeAction
   | CountDownTimerAction

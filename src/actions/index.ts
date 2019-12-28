@@ -7,7 +7,8 @@ import {
   IncrementTimeAction,
   CountDownTimerAction,
   ResetTimerAction,
-  EndGameAction
+  EndGameAction,
+  IncrementMatchesAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -23,6 +24,10 @@ export const hideCards = (): HideCardAction => ({
 export const setUsed = (cardIds: Array<number>): SetUsedAction => ({
   type: ActionNames.SET_USED,
   cardIds
+});
+
+export const incrementMatches = (): IncrementMatchesAction => ({
+  type: ActionNames.INCREMENT_MATCHES
 });
 
 export const incrementFlips = (): IncrementFlipsAction => ({
