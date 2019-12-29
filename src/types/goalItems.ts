@@ -1,4 +1,4 @@
-import { Language } from "./general";
+import { Language, SpecialCardType } from "./general";
 
 export type EnglishCardData = {
   language: Language.ENGLISH;
@@ -17,4 +17,9 @@ export type JapaneseCardData = {
   japaneseLatin: string;
 };
 
-export type CardData = EnglishCardData | JapaneseCardData;
+export type SpecialCard = {
+  cardId: number;
+  type: SpecialCardType;
+};
+
+export type CardData = EnglishCardData | JapaneseCardData | SpecialCard;
