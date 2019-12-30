@@ -11,6 +11,7 @@ type StateProps = {
   percent: number;
   revealedCards: Map<number, CardData>;
   isGameOver: boolean;
+  specialTimerCount: number;
 };
 type DispatchProps = {
   handleCountDown: (currPercent: number) => void;
@@ -24,6 +25,7 @@ const CardTimerContainer: React.FC<Props> = (props) => {
     content = (
       <CardTimer
         percent={props.percent}
+        specialTimerCount={props.specialTimerCount}
         handleCountDown={props.handleCountDown}
         handleResetTimer={props.handleResetTimer}
       />
@@ -38,7 +40,8 @@ const CardTimerContainer: React.FC<Props> = (props) => {
 const mapStateToProps = (state: AppState): StateProps => ({
   percent: state.cardTimer,
   revealedCards: state.cardData.revealedCards,
-  isGameOver: state.isGameOver
+  isGameOver: state.isGameOver,
+  specialTimerCount: state.specialTimerCount
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
