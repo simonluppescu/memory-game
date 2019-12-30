@@ -11,7 +11,9 @@ import {
   EndGameAction,
   IncrementMatchesAction,
   SetRevealedAction,
-  ShuffleCardsAction
+  ShuffleCardsAction,
+  AddSpecialTimerAction,
+  DecrementSpecialTimerAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -65,4 +67,12 @@ export const endGame = (): EndGameAction => ({
 
 export const shuffleCards = (): ShuffleCardsAction => ({
   type: ActionNames.SHUFFLE_CARDS
+});
+
+export const addSpecialTimer = (): AddSpecialTimerAction => ({
+  type: ActionNames.ADD_SPECIAL_TIMER
+});
+
+export const decrementSpecialTimer = (): DecrementSpecialTimerAction => ({
+  type: ActionNames.DECREMENT_SPECIAL_TIMER
 });

@@ -6,7 +6,17 @@ import { AppState } from "../store/configureStore";
 import Card from "../components/Card";
 import { CardReducerState } from "../reducers/cardReducer";
 import { CardData, isSpecialCard, SpecialCardData, LanguageCardData } from "../types/goalItems";
-import { revealCard, hideCards, setUsed, incrementFlips, incrementMatches, endGame, shuffleCards } from "../actions";
+import {
+  revealCard,
+  hideCards,
+  setUsed,
+  incrementFlips,
+  incrementMatches,
+  endGame,
+  shuffleCards,
+  addSpecialTimer,
+  decrementSpecialTimer
+} from "../actions";
 import DataProcessorService from "../services/dataProcessorService";
 import { SpecialCardType } from "../types/general";
 
@@ -54,7 +64,7 @@ const applySpecialEffect = (cardData: SpecialCardData, dispatch: Dispatch): void
       break;
 
     case SpecialCardType.TIMER:
-      console.log("TIMER");
+      dispatch(addSpecialTimer());
       break;
 
     case SpecialCardType.RETRY:
@@ -92,6 +102,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
     if (revealedCards.size === 1) {
       dispatch(incrementFlips());
+      dispatch(decrementSpecialTimer());
 
       const revealedCardData = revealedCards.values().next().value as LanguageCardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
