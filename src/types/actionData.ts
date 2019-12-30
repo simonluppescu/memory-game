@@ -11,7 +11,8 @@ export enum ActionNames {
   INCREMENT_TIME = "INCREMENT_TIME",
   COUNT_DOWN_TIMER = "COUNT_DOWN_TIMER",
   RESET_TIMER = "RESET_TIMER",
-  END_GAME = "END_GAME"
+  END_GAME = "END_GAME",
+  SHUFFLE_CARDS = "SHUFFLE_CARDS"
 }
 
 export type SetCardsAction = {
@@ -62,6 +63,10 @@ export type EndGameAction = {
   type: ActionNames.END_GAME;
 };
 
+export type ShuffleCardsAction = {
+  type: ActionNames.SHUFFLE_CARDS;
+};
+
 export type AppActions =
   | SetCardsAction
   | RevealCardAction
@@ -73,4 +78,5 @@ export type AppActions =
   | IncrementTimeAction
   | CountDownTimerAction
   | ResetTimerAction
-  | EndGameAction;
+  | EndGameAction
+  | ShuffleCardsAction;
