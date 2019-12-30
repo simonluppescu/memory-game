@@ -12,7 +12,9 @@ const SpecialCard: React.FC<Props> = (props) => {
   const { itemData, isFlippedOver, handleRevealCard } = props;
 
   return isFlippedOver ? (
-    <div className="card revealed">{itemData.type}</div>
+    <div className="card revealed">
+      <div className="special-card">{itemData.type}</div>
+    </div>
   ) : (
     <div
       className="card special"
