@@ -2,8 +2,9 @@ import React from "react";
 
 import "../styles/card.scss";
 
-import { CardData } from "../types/goalItems";
-import { Language } from "../types/general";
+import { CardData, isLanguageCard, LanguageCardData, isSpecialCard, SpecialCardData } from "../types/goalItems";
+import LanguageCard from "./LanguageCard";
+import SpecialCard from "./SpecialCard";
 
 interface Props {
   isFlippedOver: boolean;
@@ -15,36 +16,26 @@ class Card extends React.PureComponent<Props> {
   render() {
     const { itemData, isFlippedOver, handleRevealCard } = this.props;
 
-    let content;
-    if (itemData.language === Language.ENGLISH) {
-      content = (
-        <>
-          {itemData.englishText}
-          <br />
-          {itemData.englishPartOfSpeech}
-        </>
+    let cardComponent = null;
+    if (isLanguageCard(itemData)) {
+      cardComponent = (
+        <LanguageCard
+          itemData={itemData as LanguageCardData}
+          isFlippedOver={isFlippedOver}
+          handleRevealCard={handleRevealCard}
+        />
       );
-    } else if (itemData.language === Language.JAPANESE) {
-      content = (
-        <>
-          {itemData.japaneseText}
-          <br />
-          {itemData.japaneseHira}
-          <br />
-          {itemData.japaneseLatin}
-        </>
+    } else if (isSpecialCard(itemData)) {
+      cardComponent = (
+        <SpecialCard
+          itemData={itemData as SpecialCardData}
+          isFlippedOver={isFlippedOver}
+          handleRevealCard={handleRevealCard}
+        />
       );
     }
-    return isFlippedOver ? (
-      <div className="card revealed">{content}</div>
-    ) : (
-      <div
-        className="card"
-        onClick={() => {
-          handleRevealCard(itemData);
-        }}
-      ></div>
-    );
+
+    return cardComponent;
   }
 }
 

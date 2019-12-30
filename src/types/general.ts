@@ -4,8 +4,8 @@ export enum Language {
 }
 
 export enum SpecialCardType {
-  TIMER,
-  SHUFFLE,
-  RETRY,
-  TRICK
+  TIMER = "Timer",
+  SHUFFLE = "Shuffle",
+  RETRY = "Retry",
+  TRICK = "Trick"
 }

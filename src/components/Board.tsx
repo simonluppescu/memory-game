@@ -4,7 +4,7 @@ import DataProcessorService from "../services/dataProcessorService";
 import CardContainer from "../containers/CardContainer";
 import GameStatsContainer from "../containers/GameStatsContainer";
 import CardTimerContainer from "../containers/CardTimerContainer";
-import { CardData } from "../types/goalItems";
+import { CardData, isSpecialCard } from "../types/goalItems";
 import { Language } from "../types/general";
 
 interface Props {
@@ -16,17 +16,14 @@ class Board extends React.Component<Props> {
 
   private _getInitialReveals(shuffledItems: Array<CardData>): Array<CardData> {
     const initialReveals = new Map<number, CardData>();
-    for (
-      let i = 0, currLang = shuffledItems[i].language;
-      i < shuffledItems.length && initialReveals.size < Board.NUM_INITIAL_REVEALS;
-      i++
-    ) {
+    for (let i = 0, currLang = null; i < shuffledItems.length && initialReveals.size < Board.NUM_INITIAL_REVEALS; i++) {
       const item = shuffledItems[i];
 
-      if (initialReveals.has(item.matcherId) || item.language !== currLang) continue;
+      if (isSpecialCard(item)) continue;
+      if (initialReveals.has(item.matcherId) || (item.language !== currLang && currLang !== null)) continue;
 
       initialReveals.set(item.matcherId, item);
-      currLang = currLang === Language.ENGLISH ? Language.JAPANESE : Language.ENGLISH;
+      currLang = item.language === Language.ENGLISH ? Language.JAPANESE : Language.ENGLISH;
     }
 
     return Array.from(initialReveals.values());

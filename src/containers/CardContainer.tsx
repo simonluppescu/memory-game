@@ -5,9 +5,10 @@ import { connect } from "react-redux";
 import { AppState } from "../store/configureStore";
 import Card from "../components/Card";
 import { CardReducerState } from "../reducers/cardReducer";
-import { CardData } from "../types/goalItems";
+import { CardData, isSpecialCard, SpecialCardData, LanguageCardData } from "../types/goalItems";
 import { revealCard, hideCards, setUsed, incrementFlips, incrementMatches, endGame } from "../actions";
 import DataProcessorService from "../services/dataProcessorService";
+import { SpecialCardType } from "../types/general";
 
 type StateProps = {
   allCardData: CardReducerState;
@@ -42,6 +43,26 @@ const CardContainer: React.FC<Props> = (props) => {
   );
 };
 
+const applySpecialEffect = (cardData: SpecialCardData, dispatch: Dispatch): void => {
+  switch (cardData.type) {
+    case SpecialCardType.TRICK:
+      console.log("TRICK");
+      break;
+
+    case SpecialCardType.SHUFFLE:
+      console.log("SHUFFLE");
+      break;
+
+    case SpecialCardType.TIMER:
+      console.log("TIMER");
+      break;
+
+    case SpecialCardType.RETRY:
+      console.log("RETRY");
+      break;
+  }
+};
+
 const mapStateToProps = (state: AppState): StateProps => ({
   allCardData: state.cardData,
   isGameOver: state.isGameOver
@@ -58,10 +79,20 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
     if (revealedCards.size <= 1) dispatch(revealCard(cardData));
 
+    if (isSpecialCard(cardData)) {
+      applySpecialEffect(cardData, dispatch);
+
+      setTimeout(() => {
+        dispatch(hideCards());
+      }, 1000);
+
+      return;
+    }
+
     if (revealedCards.size === 1) {
       dispatch(incrementFlips());
 
-      const revealedCardData = revealedCards.values().next().value as CardData;
+      const revealedCardData = revealedCards.values().next().value as LanguageCardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
         if (numPairsMatched === DataProcessorService.NUM_PAIRS - 1) dispatch(endGame());
 
