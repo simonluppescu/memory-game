@@ -10,7 +10,8 @@ import {
   ResetTimerAction,
   EndGameAction,
   IncrementMatchesAction,
-  SetRevealedAction
+  SetRevealedAction,
+  ShuffleCardsAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -60,4 +61,8 @@ export const resetTimer = (): ResetTimerAction => ({
 
 export const endGame = (): EndGameAction => ({
   type: ActionNames.END_GAME
+});
+
+export const shuffleCards = (): ShuffleCardsAction => ({
+  type: ActionNames.SHUFFLE_CARDS
 });
