@@ -1,6 +1,7 @@
 import { CardData } from "./goalItems";
 
 export enum ActionNames {
+  SET_CARDS = "SET_CARDS",
   REVEAL_CARD = "REVEAL_CARD",
   HIDE_CARDS = "HIDE_CARDS",
   SET_USED = "SET_USED",
@@ -12,6 +13,11 @@ export enum ActionNames {
   RESET_TIMER = "RESET_TIMER",
   END_GAME = "END_GAME"
 }
+
+export type SetCardsAction = {
+  type: ActionNames.SET_CARDS;
+  cards: Array<CardData>;
+};
 
 export type RevealCardAction = {
   type: ActionNames.REVEAL_CARD;
@@ -57,6 +63,7 @@ export type EndGameAction = {
 };
 
 export type AppActions =
+  | SetCardsAction
   | RevealCardAction
   | HideCardAction
   | SetUsedAction

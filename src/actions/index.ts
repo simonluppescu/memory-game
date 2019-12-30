@@ -1,4 +1,5 @@
 import {
+  SetCardsAction,
   RevealCardAction,
   ActionNames,
   HideCardAction,
@@ -12,6 +13,11 @@ import {
   SetRevealedAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
+
+export const setCards = (cards: Array<CardData>): SetCardsAction => ({
+  type: ActionNames.SET_CARDS,
+  cards
+});
 
 export const revealCard = (cardData: CardData): RevealCardAction => ({
   type: ActionNames.REVEAL_CARD,
