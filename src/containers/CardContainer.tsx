@@ -15,7 +15,11 @@ import {
   endGame,
   shuffleCards,
   addSpecialTimer,
-  decrementSpecialTimer
+  decrementSpecialTimer,
+  addSpecialRetry,
+  decrementSpecialRetry,
+  resetTimer,
+  unrevealCards
 } from "../actions";
 import DataProcessorService from "../services/dataProcessorService";
 import { SpecialCardType } from "../types/general";
@@ -23,6 +27,7 @@ import { SpecialCardType } from "../types/general";
 type StateProps = {
   allCardData: CardReducerState;
   isGameOver: boolean;
+  specialRetryCount: number;
 };
 type OwnProps = {
   itemData: CardData;
@@ -32,13 +37,14 @@ type DispatchProps = {
     cardData: CardData,
     revealedCards: Map<number, CardData>,
     numPairsMatched: number,
-    isGameOver: boolean
+    isGameOver: boolean,
+    specialRetryCount: number
   ) => void;
 };
 type Props = StateProps & OwnProps & DispatchProps;
 
 const CardContainer: React.FC<Props> = (props) => {
-  const { allCardData, itemData, isGameOver } = props;
+  const { allCardData, itemData, isGameOver, specialRetryCount } = props;
   const { revealedCards, usedCards, numPairsMatched } = allCardData;
   const { cardId } = itemData;
 
@@ -47,7 +53,7 @@ const CardContainer: React.FC<Props> = (props) => {
       isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
       itemData={itemData}
       handleRevealCard={(cardData: CardData) => {
-        props.handleRevealCard(cardData, revealedCards, numPairsMatched, isGameOver);
+        props.handleRevealCard(cardData, revealedCards, numPairsMatched, isGameOver, specialRetryCount);
       }}
     ></Card>
   );
@@ -68,14 +74,15 @@ const applySpecialEffect = (cardData: SpecialCardData, dispatch: Dispatch): void
       break;
 
     case SpecialCardType.RETRY:
-      console.log("RETRY");
+      dispatch(addSpecialRetry());
       break;
   }
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
   allCardData: state.cardData,
-  isGameOver: state.isGameOver
+  isGameOver: state.isGameOver,
+  specialRetryCount: state.specialRetryCount
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
@@ -83,7 +90,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     cardData: CardData,
     revealedCards: Map<number, CardData>,
     numPairsMatched: number,
-    isGameOver: boolean
+    isGameOver: boolean,
+    specialRetryCount: number
   ): void => {
     if (isGameOver) return;
 
@@ -101,17 +109,27 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     }
 
     if (revealedCards.size === 1) {
-      dispatch(incrementFlips());
       dispatch(decrementSpecialTimer());
+      dispatch(decrementSpecialRetry());
 
       const revealedCardData = revealedCards.values().next().value as LanguageCardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
+        // We need to do DataProcessorService.NUM_PAIRS - 1 because this represents the last pair we're matching
         if (numPairsMatched === DataProcessorService.NUM_PAIRS - 1) dispatch(endGame());
 
         dispatch(setUsed([revealedCardData.cardId, cardData.cardId]));
         dispatch(incrementMatches());
         dispatch(hideCards());
+        dispatch(incrementFlips());
+      } else if (specialRetryCount > 0) {
+        setTimeout(() => {
+          dispatch(unrevealCards([cardData.cardId]));
+          dispatch(resetTimer());
+          dispatch(decrementSpecialRetry());
+        }, 1000);
       } else {
+        dispatch(incrementFlips());
+
         setTimeout(() => {
           dispatch(hideCards());
         }, 1000);
