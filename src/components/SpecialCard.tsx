@@ -11,7 +11,6 @@ interface Props {
 const SpecialCard: React.FC<Props> = (props) => {
   const { itemData, isFlippedOver, handleRevealCard } = props;
 
-  // This output is temporarily distinguishing these cards from the normal language cards for debugging
   return isFlippedOver ? (
     <div className="card revealed">
       <div className="special-card">{itemData.type}</div>
