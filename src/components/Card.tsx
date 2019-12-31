@@ -8,13 +8,14 @@ import SpecialCard from "./SpecialCard";
 
 interface Props {
   isFlippedOver: boolean;
+  isGameOver: boolean;
   itemData: CardData;
   handleRevealCard: (cardData: CardData) => void;
 }
 
 class Card extends React.PureComponent<Props> {
   render() {
-    const { itemData, isFlippedOver, handleRevealCard } = this.props;
+    const { itemData, isFlippedOver, isGameOver, handleRevealCard } = this.props;
 
     let cardComponent = null;
     if (isLanguageCard(itemData)) {
@@ -29,7 +30,7 @@ class Card extends React.PureComponent<Props> {
       cardComponent = (
         <SpecialCard
           itemData={itemData as SpecialCardData}
-          isFlippedOver={isFlippedOver}
+          isFlippedOver={isFlippedOver || isGameOver}
           handleRevealCard={handleRevealCard}
         />
       );
