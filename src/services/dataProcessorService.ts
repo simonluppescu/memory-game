@@ -5,7 +5,7 @@ import { EnglishCardData, JapaneseCardData, CardData, SpecialCardData } from "..
 import { Language, SpecialCardType } from "../types/general";
 
 class DataProcessorService {
-  static readonly NUM_PAIRS = 4;
+  static readonly NUM_PAIRS = 14;
   static readonly SPECIAL_COUNTS: { [key: string]: number } = {
     [SpecialCardType.RETRY]: 1,
     [SpecialCardType.TIMER]: 1,
