@@ -1,7 +1,8 @@
 import {
+  ActionNames,
   SetCardsAction,
   RevealCardAction,
-  ActionNames,
+  UnrevealCardsAction,
   HideCardAction,
   SetUsedAction,
   IncrementFlipsAction,
@@ -13,7 +14,9 @@ import {
   SetRevealedAction,
   ShuffleCardsAction,
   AddSpecialTimerAction,
-  DecrementSpecialTimerAction
+  DecrementSpecialTimerAction,
+  AddSpecialRetryAction,
+  DecrementSpecialRetryAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -25,6 +28,11 @@ export const setCards = (cards: Array<CardData>): SetCardsAction => ({
 export const revealCard = (cardData: CardData): RevealCardAction => ({
   type: ActionNames.REVEAL_CARD,
   cardData
+});
+
+export const unrevealCards = (cardIds: Array<number>): UnrevealCardsAction => ({
+  type: ActionNames.UNREVEAL_CARDS,
+  cardIds
 });
 
 export const hideCards = (): HideCardAction => ({
@@ -75,4 +83,12 @@ export const addSpecialTimer = (): AddSpecialTimerAction => ({
 
 export const decrementSpecialTimer = (): DecrementSpecialTimerAction => ({
   type: ActionNames.DECREMENT_SPECIAL_TIMER
+});
+
+export const addSpecialRetry = (): AddSpecialRetryAction => ({
+  type: ActionNames.ADD_SPECIAL_RETRY
+});
+
+export const decrementSpecialRetry = (): DecrementSpecialRetryAction => ({
+  type: ActionNames.DECREMENT_SPECIAL_RETRY
 });

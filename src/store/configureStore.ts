@@ -8,6 +8,7 @@ import cardTimerReducer from "../reducers/cardTimerReducer";
 import gameOverReducer from "../reducers/gameOverReducer";
 import allCardsReducer from "../reducers/allCardsReducer";
 import specialTimerReducer from "../reducers/specialTimerReducer";
+import specialRetryReducer from "../reducers/specialRetryReducer";
 
 const rootReducer = combineReducers({
   cards: allCardsReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   secondsElapsed: timeElapsedReducer,
   cardTimer: cardTimerReducer,
   isGameOver: gameOverReducer,
-  specialTimerCount: specialTimerReducer
+  specialTimerCount: specialTimerReducer,
+  specialRetryCount: specialRetryReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

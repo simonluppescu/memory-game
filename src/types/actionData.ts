@@ -3,6 +3,7 @@ import { CardData } from "./goalItems";
 export enum ActionNames {
   SET_CARDS = "SET_CARDS",
   REVEAL_CARD = "REVEAL_CARD",
+  UNREVEAL_CARDS = "UNREVEAL_CARDS",
   HIDE_CARDS = "HIDE_CARDS",
   SET_USED = "SET_USED",
   SET_REVEALED = "SET_REVEALED",
@@ -14,7 +15,9 @@ export enum ActionNames {
   END_GAME = "END_GAME",
   SHUFFLE_CARDS = "SHUFFLE_CARDS",
   ADD_SPECIAL_TIMER = "ADD_SPECIAL_TIMER",
-  DECREMENT_SPECIAL_TIMER = "DECREMENT_SPECIAL_TIMER"
+  DECREMENT_SPECIAL_TIMER = "DECREMENT_SPECIAL_TIMER",
+  ADD_SPECIAL_RETRY = "ADD_SPECIAL_RETRY",
+  DECREMENT_SPECIAL_RETRY = "DECREMENT_SPECIAL_RETRY"
 }
 
 export type SetCardsAction = {
@@ -25,6 +28,11 @@ export type SetCardsAction = {
 export type RevealCardAction = {
   type: ActionNames.REVEAL_CARD;
   cardData: CardData;
+};
+
+export type UnrevealCardsAction = {
+  type: ActionNames.UNREVEAL_CARDS;
+  cardIds: Array<number>;
 };
 
 export type HideCardAction = {
@@ -77,9 +85,18 @@ export type DecrementSpecialTimerAction = {
   type: ActionNames.DECREMENT_SPECIAL_TIMER;
 };
 
+export type AddSpecialRetryAction = {
+  type: ActionNames.ADD_SPECIAL_RETRY;
+};
+
+export type DecrementSpecialRetryAction = {
+  type: ActionNames.DECREMENT_SPECIAL_RETRY;
+};
+
 export type AppActions =
   | SetCardsAction
   | RevealCardAction
+  | UnrevealCardsAction
   | HideCardAction
   | SetUsedAction
   | SetRevealedAction
@@ -91,4 +108,6 @@ export type AppActions =
   | EndGameAction
   | ShuffleCardsAction
   | AddSpecialTimerAction
-  | DecrementSpecialTimerAction;
+  | DecrementSpecialTimerAction
+  | AddSpecialRetryAction
+  | DecrementSpecialRetryAction;

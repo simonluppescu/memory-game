@@ -17,6 +17,13 @@ const cardReducer = (state = defaultState, action: AppActions): CardReducerState
         newState.revealedCards.set(action.cardData.cardId, action.cardData);
       });
 
+    case ActionNames.UNREVEAL_CARDS:
+      return produce(state, (newState) => {
+        action.cardIds.forEach((cardId) => {
+          newState.revealedCards.delete(cardId);
+        });
+      });
+
     case ActionNames.HIDE_CARDS:
       return produce(state, (newState) => {
         newState.revealedCards.clear();
