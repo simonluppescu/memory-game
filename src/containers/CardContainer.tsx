@@ -71,51 +71,18 @@ const applySpecialEffect = (
     case SpecialCardType.TRICK: {
       if (allCardData.usedCards.size === 0) break;
 
-      let matcherIdToReveal = null;
-      const cardIdsToReveal: Array<number> = [];
-      let i;
-      for (i = 0; i < allCards.length; i++) {
-        const thisCard = allCards[i];
-        if (isSpecialCard(thisCard)) continue;
+      const unusedCards = allCards.filter((card) => isLanguageCard(card) && !allCardData.usedCards.has(card.cardId));
+      const randCardToReveal = unusedCards[Math.floor(Math.random() * unusedCards.length)] as LanguageCardData;
+      const cardIdsToReveal = unusedCards
+        .filter((card) => isLanguageCard(card) && card.matcherId === randCardToReveal.matcherId)
+        .map((card) => card.cardId);
 
-        if (!allCardData.usedCards.has(thisCard.cardId)) {
-          matcherIdToReveal = thisCard.matcherId;
-          cardIdsToReveal.push(thisCard.cardId);
-          break;
-        }
-      }
-      for (i = i + 1; i < allCards.length; i++) {
-        const thisCard = allCards[i];
-        if (isSpecialCard(thisCard)) continue;
+      const usedCards = allCards.filter((card) => allCardData.usedCards.has(card.cardId));
+      const randCardToHide = usedCards[Math.floor(Math.random() * usedCards.length)] as LanguageCardData;
+      const cardIdsToHide = usedCards
+        .filter((card) => isLanguageCard(card) && card.matcherId === randCardToHide.matcherId)
+        .map((card) => card.cardId);
 
-        if (thisCard.matcherId === matcherIdToReveal) {
-          cardIdsToReveal.push(thisCard.cardId);
-          break;
-        }
-      }
-      let matcherIdToHide = null;
-      const cardIdsToHide: Array<number> = [];
-      for (i = 0; i < allCards.length; i++) {
-        const thisCard = allCards[i];
-        if (isSpecialCard(thisCard)) continue;
-
-        if (allCardData.usedCards.has(thisCard.cardId)) {
-          matcherIdToHide = thisCard.matcherId;
-          cardIdsToHide.push(thisCard.cardId);
-          break;
-        }
-      }
-      for (i = i + 1; i < allCards.length; i++) {
-        const thisCard = allCards[i];
-        if (isSpecialCard(thisCard)) continue;
-
-        if (thisCard.matcherId === matcherIdToHide) {
-          cardIdsToHide.push(thisCard.cardId);
-          break;
-        }
-      }
-      console.log("card reveal", cardIdsToReveal);
-      console.log("card hide", cardIdsToHide);
       if (cardIdsToReveal.length > 0 && cardIdsToHide.length > 0) {
         dispatch(trickCards(cardIdsToReveal, cardIdsToHide));
       }
