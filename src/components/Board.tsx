@@ -15,7 +15,7 @@ const Board: React.FC<Props> = (props) => {
       <GameStatsContainer />
       <CardTimerContainer />
       {props.cards.map((item, index) => (
-        <CardContainer key={index} itemData={item}></CardContainer>
+        <CardContainer key={index} itemData={item} />
       ))}
     </div>
   );

@@ -53,6 +53,7 @@ const CardContainer: React.FC<Props> = (props) => {
   return (
     <Card
       isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
+      isGameOver={isGameOver}
       itemData={itemData}
       handleRevealCard={(cardData: CardData) => {
         props.handleRevealCard(allCards, cardData, allCardData, isGameOver, specialRetryCount);
