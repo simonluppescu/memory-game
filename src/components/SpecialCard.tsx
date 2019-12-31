@@ -18,13 +18,11 @@ const SpecialCard: React.FC<Props> = (props) => {
     </div>
   ) : (
     <div
-      className="card special"
+      className="card"
       onClick={() => {
         handleRevealCard(itemData);
       }}
-    >
-      {itemData.type}
-    </div>
+    />
   );
 };
 
