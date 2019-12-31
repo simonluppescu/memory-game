@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { AppState } from "../store/configureStore";
 import Card from "../components/Card";
 import { CardReducerState } from "../reducers/cardReducer";
-import { CardData, isSpecialCard, SpecialCardData, LanguageCardData } from "../types/goalItems";
+import { CardData, isSpecialCard, SpecialCardData, LanguageCardData, isLanguageCard } from "../types/goalItems";
 import {
   revealCard,
   hideCards,
@@ -19,12 +19,14 @@ import {
   addSpecialRetry,
   decrementSpecialRetry,
   resetTimer,
-  unrevealCards
+  unrevealCards,
+  trickCards
 } from "../actions";
 import DataProcessorService from "../services/dataProcessorService";
 import { SpecialCardType } from "../types/general";
 
 type StateProps = {
+  allCards: Array<CardData>;
   allCardData: CardReducerState;
   isGameOver: boolean;
   specialRetryCount: number;
@@ -34,9 +36,9 @@ type OwnProps = {
 };
 type DispatchProps = {
   handleRevealCard: (
+    allCards: Array<CardData>,
     cardData: CardData,
-    revealedCards: Map<number, CardData>,
-    numPairsMatched: number,
+    allCardData: CardReducerState,
     isGameOver: boolean,
     specialRetryCount: number
   ) => void;
@@ -44,8 +46,8 @@ type DispatchProps = {
 type Props = StateProps & OwnProps & DispatchProps;
 
 const CardContainer: React.FC<Props> = (props) => {
-  const { allCardData, itemData, isGameOver, specialRetryCount } = props;
-  const { revealedCards, usedCards, numPairsMatched } = allCardData;
+  const { allCards, allCardData, itemData, isGameOver, specialRetryCount } = props;
+  const { revealedCards, usedCards } = allCardData;
   const { cardId } = itemData;
 
   return (
@@ -53,17 +55,73 @@ const CardContainer: React.FC<Props> = (props) => {
       isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
       itemData={itemData}
       handleRevealCard={(cardData: CardData) => {
-        props.handleRevealCard(cardData, revealedCards, numPairsMatched, isGameOver, specialRetryCount);
+        props.handleRevealCard(allCards, cardData, allCardData, isGameOver, specialRetryCount);
       }}
     ></Card>
   );
 };
 
-const applySpecialEffect = (cardData: SpecialCardData, dispatch: Dispatch): void => {
-  switch (cardData.type) {
-    case SpecialCardType.TRICK:
-      console.log("TRICK");
+const applySpecialEffect = (
+  allCards: Array<CardData>,
+  allCardData: CardReducerState,
+  card: SpecialCardData,
+  dispatch: Dispatch
+): void => {
+  switch (card.type) {
+    case SpecialCardType.TRICK: {
+      if (allCardData.usedCards.size === 0) break;
+
+      let matcherIdToReveal = null;
+      const cardIdsToReveal: Array<number> = [];
+      let i;
+      for (i = 0; i < allCards.length; i++) {
+        const thisCard = allCards[i];
+        if (isSpecialCard(thisCard)) continue;
+
+        if (!allCardData.usedCards.has(thisCard.cardId)) {
+          matcherIdToReveal = thisCard.matcherId;
+          cardIdsToReveal.push(thisCard.cardId);
+          break;
+        }
+      }
+      for (i = i + 1; i < allCards.length; i++) {
+        const thisCard = allCards[i];
+        if (isSpecialCard(thisCard)) continue;
+
+        if (thisCard.matcherId === matcherIdToReveal) {
+          cardIdsToReveal.push(thisCard.cardId);
+          break;
+        }
+      }
+      let matcherIdToHide = null;
+      const cardIdsToHide: Array<number> = [];
+      for (i = 0; i < allCards.length; i++) {
+        const thisCard = allCards[i];
+        if (isSpecialCard(thisCard)) continue;
+
+        if (allCardData.usedCards.has(thisCard.cardId)) {
+          matcherIdToHide = thisCard.matcherId;
+          cardIdsToHide.push(thisCard.cardId);
+          break;
+        }
+      }
+      for (i = i + 1; i < allCards.length; i++) {
+        const thisCard = allCards[i];
+        if (isSpecialCard(thisCard)) continue;
+
+        if (thisCard.matcherId === matcherIdToHide) {
+          cardIdsToHide.push(thisCard.cardId);
+          break;
+        }
+      }
+      console.log("card reveal", cardIdsToReveal);
+      console.log("card hide", cardIdsToHide);
+      if (cardIdsToReveal.length > 0 && cardIdsToHide.length > 0) {
+        dispatch(trickCards(cardIdsToReveal, cardIdsToHide));
+      }
+
       break;
+    }
 
     case SpecialCardType.SHUFFLE:
       dispatch(shuffleCards());
@@ -80,6 +138,7 @@ const applySpecialEffect = (cardData: SpecialCardData, dispatch: Dispatch): void
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
+  allCards: state.cards,
   allCardData: state.cardData,
   isGameOver: state.isGameOver,
   specialRetryCount: state.specialRetryCount
@@ -87,19 +146,20 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   handleRevealCard: (
+    allCards: Array<CardData>,
     cardData: CardData,
-    revealedCards: Map<number, CardData>,
-    numPairsMatched: number,
+    allCardData: CardReducerState,
     isGameOver: boolean,
     specialRetryCount: number
   ): void => {
     if (isGameOver) return;
 
+    const { revealedCards, numPairsMatched } = allCardData;
     if (revealedCards.size <= 1) dispatch(revealCard(cardData));
 
     if (isSpecialCard(cardData)) {
       setTimeout(() => {
-        applySpecialEffect(cardData, dispatch);
+        applySpecialEffect(allCards, allCardData, cardData, dispatch);
 
         dispatch(setUsed([cardData.cardId]));
         dispatch(hideCards());

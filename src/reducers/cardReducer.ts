@@ -48,6 +48,16 @@ const cardReducer = (state = defaultState, action: AppActions): CardReducerState
         newState.numPairsMatched += 1;
       });
 
+    case ActionNames.TRICK_CARDS:
+      return produce(state, (newState) => {
+        action.cardIdsToHide.forEach((cardId) => {
+          newState.usedCards.delete(cardId);
+        });
+        action.cardIdsToReveal.forEach((cardId) => {
+          newState.usedCards.add(cardId);
+        });
+      });
+
     default:
       return state;
   }

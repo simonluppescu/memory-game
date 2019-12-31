@@ -14,6 +14,7 @@ export enum ActionNames {
   RESET_TIMER = "RESET_TIMER",
   END_GAME = "END_GAME",
   SHUFFLE_CARDS = "SHUFFLE_CARDS",
+  TRICK_CARDS = "TRICK_CARDS",
   ADD_SPECIAL_TIMER = "ADD_SPECIAL_TIMER",
   DECREMENT_SPECIAL_TIMER = "DECREMENT_SPECIAL_TIMER",
   ADD_SPECIAL_RETRY = "ADD_SPECIAL_RETRY",
@@ -77,6 +78,12 @@ export type ShuffleCardsAction = {
   type: ActionNames.SHUFFLE_CARDS;
 };
 
+export type TrickCardsAction = {
+  type: ActionNames.TRICK_CARDS;
+  cardIdsToReveal: Array<number>;
+  cardIdsToHide: Array<number>;
+};
+
 export type AddSpecialTimerAction = {
   type: ActionNames.ADD_SPECIAL_TIMER;
 };
@@ -107,6 +114,7 @@ export type AppActions =
   | ResetTimerAction
   | EndGameAction
   | ShuffleCardsAction
+  | TrickCardsAction
   | AddSpecialTimerAction
   | DecrementSpecialTimerAction
   | AddSpecialRetryAction

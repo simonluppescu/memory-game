@@ -16,7 +16,8 @@ import {
   AddSpecialTimerAction,
   DecrementSpecialTimerAction,
   AddSpecialRetryAction,
-  DecrementSpecialRetryAction
+  DecrementSpecialRetryAction,
+  TrickCardsAction
 } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
@@ -91,4 +92,10 @@ export const addSpecialRetry = (): AddSpecialRetryAction => ({
 
 export const decrementSpecialRetry = (): DecrementSpecialRetryAction => ({
   type: ActionNames.DECREMENT_SPECIAL_RETRY
+});
+
+export const trickCards = (cardIdsToReveal: Array<number>, cardIdsToHide: Array<number>): TrickCardsAction => ({
+  type: ActionNames.TRICK_CARDS,
+  cardIdsToReveal,
+  cardIdsToHide
 });
