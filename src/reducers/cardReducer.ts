@@ -3,43 +3,47 @@ import produce from "immer";
 import { AppActions, ActionNames } from "../types/actionData";
 import { CardData } from "../types/goalItems";
 
-const defaultState = {
-  revealedCards: new Map<number, CardData>(),
-  usedCards: new Set<number>(),
+export type CardReducerState = {
+  revealedCards: { [key: number]: CardData };
+  usedCards: { [key: number]: true };
+  numPairsMatched: number;
+};
+const defaultState: CardReducerState = {
+  revealedCards: {},
+  usedCards: {},
   numPairsMatched: 0
 };
-export type CardReducerState = typeof defaultState;
 
 const cardReducer = (state = defaultState, action: AppActions): CardReducerState => {
   switch (action.type) {
     case ActionNames.REVEAL_CARD:
       return produce(state, (newState) => {
-        newState.revealedCards.set(action.cardData.cardId, action.cardData);
+        newState.revealedCards[action.cardData.cardId] = action.cardData;
       });
 
     case ActionNames.UNREVEAL_CARDS:
       return produce(state, (newState) => {
         action.cardIds.forEach((cardId) => {
-          newState.revealedCards.delete(cardId);
+          delete newState.revealedCards[cardId];
         });
       });
 
     case ActionNames.HIDE_CARDS:
       return produce(state, (newState) => {
-        newState.revealedCards.clear();
+        newState.revealedCards = {};
       });
 
     case ActionNames.SET_USED:
       return produce(state, (newState) => {
         action.cardIds.forEach((cardId) => {
-          newState.usedCards.add(cardId);
+          newState.usedCards[cardId] = true;
         });
       });
 
     case ActionNames.SET_REVEALED:
       return produce(state, (newState) => {
         action.cards.forEach((card) => {
-          newState.revealedCards.set(card.cardId, card);
+          newState.revealedCards[card.cardId] = card;
         });
       });
 
@@ -51,10 +55,10 @@ const cardReducer = (state = defaultState, action: AppActions): CardReducerState
     case ActionNames.TRICK_CARDS:
       return produce(state, (newState) => {
         action.cardIdsToHide.forEach((cardId) => {
-          newState.usedCards.delete(cardId);
+          delete newState.usedCards[cardId];
         });
         action.cardIdsToReveal.forEach((cardId) => {
-          newState.usedCards.add(cardId);
+          newState.usedCards[cardId] = true;
         });
       });
 

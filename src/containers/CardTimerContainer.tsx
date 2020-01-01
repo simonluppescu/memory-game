@@ -9,7 +9,7 @@ import { countDownTimer, resetTimer, endGame } from "../actions";
 
 type StateProps = {
   percent: number;
-  revealedCards: Map<number, CardData>;
+  revealedCards: { [key: number]: CardData };
   isGameOver: boolean;
   specialTimerCount: number;
 };
@@ -21,7 +21,7 @@ type Props = StateProps & DispatchProps;
 
 const CardTimerContainer: React.FC<Props> = (props) => {
   let content = null;
-  if (props.revealedCards.size === 1 && !props.isGameOver) {
+  if (Object.keys(props.revealedCards).length === 1 && !props.isGameOver) {
     content = (
       <CardTimer
         percent={props.percent}

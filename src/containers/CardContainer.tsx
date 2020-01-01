@@ -52,7 +52,7 @@ const CardContainer: React.FC<Props> = (props) => {
 
   return (
     <Card
-      isFlippedOver={revealedCards.has(cardId) || usedCards.has(cardId)}
+      isFlippedOver={revealedCards[cardId] !== undefined || usedCards[cardId]}
       isGameOver={isGameOver}
       itemData={itemData}
       handleRevealCard={(cardData: CardData) => {
@@ -70,15 +70,17 @@ const applySpecialEffect = (
 ): void => {
   switch (card.type) {
     case SpecialCardType.TRICK: {
-      if (allCardData.usedCards.size === 0) break;
+      if (Object.keys(allCardData.usedCards).length === 0) break;
 
-      const unusedCards = allCards.filter((card) => isLanguageCard(card) && !allCardData.usedCards.has(card.cardId));
+      const unusedCards = allCards.filter(
+        (card) => isLanguageCard(card) && allCardData.usedCards[card.cardId] === undefined
+      );
       const randCardToReveal = unusedCards[Math.floor(Math.random() * unusedCards.length)] as LanguageCardData;
       const cardIdsToReveal = unusedCards
         .filter((card) => isLanguageCard(card) && card.matcherId === randCardToReveal.matcherId)
         .map((card) => card.cardId);
 
-      const usedCards = allCards.filter((card) => allCardData.usedCards.has(card.cardId));
+      const usedCards = allCards.filter((card) => allCardData.usedCards[card.cardId] === undefined);
       const randCardToHide = usedCards[Math.floor(Math.random() * usedCards.length)] as LanguageCardData;
       const cardIdsToHide = usedCards
         .filter((card) => isLanguageCard(card) && card.matcherId === randCardToHide.matcherId)
@@ -123,7 +125,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     if (isGameOver) return;
 
     const { revealedCards, numPairsMatched } = allCardData;
-    if (revealedCards.size <= 1) dispatch(revealCard(cardData));
+    if (Object.keys(revealedCards).length <= 1) dispatch(revealCard(cardData));
 
     if (isSpecialCard(cardData)) {
       setTimeout(() => {
@@ -136,11 +138,11 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       return;
     }
 
-    if (revealedCards.size === 1) {
+    if (Object.keys(revealedCards).length === 1) {
       dispatch(decrementSpecialTimer());
       dispatch(decrementSpecialRetry());
 
-      const revealedCardData = revealedCards.values().next().value as LanguageCardData;
+      const revealedCardData = Object.values(revealedCards)[0] as LanguageCardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
         // We need to do DataProcessorService.NUM_PAIRS - 1 because this represents the last pair we're matching
         if (numPairsMatched === DataProcessorService.NUM_PAIRS - 1) dispatch(endGame());
