@@ -13,15 +13,12 @@ class DataProcessorService {
     [SpecialCardType.TRICK]: 1
   };
 
-  allItems: Array<CardData>;
   shuffledItems: Array<CardData>;
 
   constructor() {
     const items = this._initializeItems();
 
-    this.allItems = items;
-    this.shuffledItems = this.allItems.slice();
-    shuffle(this.shuffledItems);
+    this.shuffledItems = shuffle(items);
   }
 
   private _initializeItems(): Array<CardData> {
@@ -29,9 +26,11 @@ class DataProcessorService {
     const japaneseItems: Array<JapaneseCardData> = [];
     const specialItems: Array<SpecialCardData> = [];
 
+    const allItems = shuffle(goalItems.goal_items);
+
     let index;
     for (index = 1; index < DataProcessorService.NUM_PAIRS * 2; index += 2) {
-      const goalItem = goalItems.goal_items[index];
+      const goalItem = allItems[index];
 
       englishItems.push({
         language: Language.ENGLISH,
