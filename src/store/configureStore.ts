@@ -23,4 +23,5 @@ const rootReducer = combineReducers({
 
 export type AppState = ReturnType<typeof rootReducer>;
 
-export const store = createStore(rootReducer, composeWithDevTools());
+const composeEnhancers = composeWithDevTools({ serialize: true });
+export const store = createStore(rootReducer, composeEnhancers());
