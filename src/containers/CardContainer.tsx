@@ -120,10 +120,15 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     isGameOver: boolean,
     specialRetryCount: number
   ): void => {
+    console.log("Starting handleRevealCard");
     if (isGameOver) return;
+
+    console.log("1");
 
     const { revealedCards, numPairsMatched } = allCardData;
     if (revealedCards.size <= 1) dispatch(revealCard(cardData));
+
+    console.log("2");
 
     if (isSpecialCard(cardData)) {
       setTimeout(() => {
@@ -136,12 +141,15 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       return;
     }
 
+    console.log("3");
     if (revealedCards.size === 1) {
       dispatch(decrementSpecialTimer());
       dispatch(decrementSpecialRetry());
 
+      console.log("4");
       const revealedCardData = revealedCards.values().next().value as LanguageCardData;
       if (revealedCardData.matcherId === cardData.matcherId) {
+        console.log("equal");
         // We need to do DataProcessorService.NUM_PAIRS - 1 because this represents the last pair we're matching
         if (numPairsMatched === DataProcessorService.NUM_PAIRS - 1) dispatch(endGame());
 
@@ -156,6 +164,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
           dispatch(decrementSpecialRetry());
         }, 1000);
       } else {
+        console.log("not equal");
         dispatch(incrementFlips());
 
         setTimeout(() => {

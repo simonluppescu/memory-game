@@ -9,39 +9,43 @@ interface Props {
   handleRevealCard: (cardData: CardData) => void;
 }
 
-const LanguageCard: React.FC<Props> = (props) => {
-  const { itemData, isFlippedOver, handleRevealCard } = props;
+class LanguageCard extends React.Component<Props> {
+  render() {
+    console.log("Rendering Language", this.props.itemData.cardId);
+    console.log(this.props);
+    const { itemData, isFlippedOver, handleRevealCard } = this.props;
 
-  let content;
-  if (itemData.language === Language.ENGLISH) {
-    content = (
-      <>
-        {itemData.englishText}
-        <br />
-        {itemData.englishPartOfSpeech}
-      </>
-    );
-  } else if (itemData.language === Language.JAPANESE) {
-    content = (
-      <>
-        {itemData.japaneseText}
-        <br />
-        {itemData.japaneseHira}
-        <br />
-        {itemData.japaneseLatin}
-      </>
+    let content;
+    if (itemData.language === Language.ENGLISH) {
+      content = (
+        <>
+          {itemData.englishText}
+          <br />
+          {itemData.englishPartOfSpeech}
+        </>
+      );
+    } else if (itemData.language === Language.JAPANESE) {
+      content = (
+        <>
+          {itemData.japaneseText}
+          <br />
+          {itemData.japaneseHira}
+          <br />
+          {itemData.japaneseLatin}
+        </>
+      );
+    }
+    return isFlippedOver ? (
+      <div className="card revealed">{content}</div>
+    ) : (
+      <div
+        className="card"
+        onClick={() => {
+          handleRevealCard(itemData);
+        }}
+      ></div>
     );
   }
-  return isFlippedOver ? (
-    <div className="card revealed">{content}</div>
-  ) : (
-    <div
-      className="card"
-      onClick={() => {
-        handleRevealCard(itemData);
-      }}
-    ></div>
-  );
-};
+}
 
 export default LanguageCard;

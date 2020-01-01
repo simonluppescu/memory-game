@@ -5,7 +5,7 @@ import { EnglishCardData, JapaneseCardData, CardData, SpecialCardData } from "..
 import { Language, SpecialCardType } from "../types/general";
 
 class DataProcessorService {
-  static readonly NUM_PAIRS = 14;
+  static readonly NUM_PAIRS = 5;
   static readonly SPECIAL_COUNTS: { [key: string]: number } = {
     [SpecialCardType.RETRY]: 1,
     [SpecialCardType.TIMER]: 1,
@@ -49,15 +49,15 @@ class DataProcessorService {
       });
     }
 
-    for (const key in DataProcessorService.SPECIAL_COUNTS) {
-      for (let i = 0; i < DataProcessorService.SPECIAL_COUNTS[key]; i++) {
-        specialItems.push({
-          cardId: index,
-          type: key as SpecialCardType
-        });
-        index++;
-      }
-    }
+    // for (const key in DataProcessorService.SPECIAL_COUNTS) {
+    //   for (let i = 0; i < DataProcessorService.SPECIAL_COUNTS[key]; i++) {
+    //     specialItems.push({
+    //       cardId: index,
+    //       type: key as SpecialCardType
+    //     });
+    //     index++;
+    //   }
+    // }
 
     return [...englishItems, ...japaneseItems, ...specialItems];
   }
