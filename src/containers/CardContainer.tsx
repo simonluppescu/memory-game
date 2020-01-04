@@ -2,10 +2,10 @@ import React from "react";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 
-import { AppState } from "../store/configureStore";
 import Card from "../components/Card";
 import { CardReducerState } from "../reducers/cardReducer";
 import { CardData, isSpecialCard, SpecialCardData, LanguageCardData, isLanguageCard } from "../types/goalItems";
+import { AppState } from "../store/configureStore";
 import {
   revealCard,
   hideCards,

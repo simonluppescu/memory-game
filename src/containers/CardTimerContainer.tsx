@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { AppState } from "../store/configureStore";
 import CardTimer from "../components/CardTimer";
+import { AppState } from "../store/configureStore";
 import { CardData } from "../types/goalItems";
 import { countDownTimer, resetTimer, endGame } from "../actions";
 

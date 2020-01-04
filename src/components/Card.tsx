@@ -2,9 +2,9 @@ import React from "react";
 
 import "../styles/card.scss";
 
-import { CardData, isLanguageCard, LanguageCardData, isSpecialCard, SpecialCardData } from "../types/goalItems";
 import LanguageCard from "./LanguageCard";
 import SpecialCard from "./SpecialCard";
+import { CardData, isLanguageCard, LanguageCardData, isSpecialCard, SpecialCardData } from "../types/goalItems";
 
 interface Props {
   isFlippedOver: boolean;

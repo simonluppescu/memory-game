@@ -17,7 +17,6 @@ interface Props {
 }
 interface State {
   timer: NodeJS.Timeout;
-  numSeconds: number;
 }
 
 class CardTimer extends React.Component<Props, State> {

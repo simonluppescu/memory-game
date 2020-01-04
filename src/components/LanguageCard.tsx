@@ -32,6 +32,7 @@ const LanguageCard: React.FC<Props> = (props) => {
       </>
     );
   }
+
   return isFlippedOver ? (
     <div className="card revealed">{content}</div>
   ) : (

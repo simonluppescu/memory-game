@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import Board from "../components/Board";
+import DataProcessorService from "../services/dataProcessorService";
 import { AppState } from "../store/configureStore";
 import { CardData, isSpecialCard } from "../types/goalItems";
 import { Language } from "../types/general";
 import { setRevealed, hideCards, setCards } from "../actions";
-import Board from "../components/Board";
-import DataProcessorService from "../services/dataProcessorService";
 
 type StateProps = {
   cards: Array<CardData>;
@@ -18,7 +18,7 @@ type DispatchProps = {
 };
 type Props = StateProps & DispatchProps;
 
-class BoardContainer extends Component<Props> {
+class BoardContainer extends React.Component<Props> {
   static readonly NUM_INITIAL_REVEALS = 4;
 
   componentDidMount() {
