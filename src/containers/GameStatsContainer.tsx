@@ -6,7 +6,7 @@ import "../styles/game-stats.scss";
 
 import { AppState } from "../store/configureStore";
 import { incrementTime } from "../actions";
-import TimeService from "../services/timeService";
+import GameStats from "../components/GameStats";
 
 type StateProps = {
   numFlips: number;
@@ -32,12 +32,7 @@ const GameStatsContainer: React.FC<Props> = (props) => {
     }
   }, [incrementTime, isGameOver]);
 
-  return (
-    <div className="game-stats">
-      Number of flips: {numFlips}, Time elapsed: {TimeService.convertToTime(secondsElapsed)}{" "}
-      {isGameOver && <span className="game-over">Game over!</span>}
-    </div>
-  );
+  return <GameStats numFlips={numFlips} secondsElapsed={secondsElapsed} isGameOver={isGameOver} />;
 };
 
 const mapStateToProps = (state: AppState): StateProps => ({
