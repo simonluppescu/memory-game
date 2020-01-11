@@ -12,7 +12,9 @@ const LanguageCard: React.FC<Props> = (props) => {
   const { itemData, isFlippedOver, handleRevealCard } = props;
 
   return isFlippedOver ? (
-    <div className="card revealed">{itemData.text}</div>
+    <div className="card revealed">
+      <div className="language-card">{itemData.text}</div>
+    </div>
   ) : (
     <div
       className="card"

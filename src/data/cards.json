@@ -15,6 +15,82 @@
     {
       "english": "hello",
       "japanese": "こんにちは"
-    }
+    },
+    {
+      "english": "to search",
+      "japanese": "探す"
+    },
+    {
+      "english": "goodbye",
+      "japanese": "さようなら"
+    },
+    {
+      "english": "to cry",
+      "japanese": "泣く"
+    },
+    {
+      "english": "to touch",
+      "japanese": "触る"
+    },
+    {
+      "english": "to sleep",
+      "japanese": "寝る"
+    },
+    {
+      "english": "apple",
+      "japanese": "りんご"
+    },
+    {
+      "english": "banana",
+      "japanese": "バナナ"
+    },
+    {
+      "english": "orange",
+      "japanese": "オレンジ"
+    },
+    {
+      "english": "desk",
+      "japanese": "机"
+    },
+    {
+      "english": "to walk",
+      "japanese": "歩く"
+    },
+    {
+      "english": "to run",
+      "japanese": "走る"
+    },
+    {
+      "english": "train",
+      "japanese": "電車"
+    },
+    {
+      "english": "bicycle",
+      "japanese": "自転車"
+    },
+    {
+      "english": "road",
+      "japanese": "道路"
+    },
+    {
+      "english": "city",
+      "japanese": "街"
+    },
+    {
+      "english": "refrigerator",
+      "japanese": "冷蔵庫"
+    },
+    {
+      "english": "face",
+      "japanese": "顔"
+    },
+    {
+      "english": "to start",
+      "japanese": "始まる"
+    },
+    {
+      "english": "to cut",
+      "japanese": "切る"
+     }
   ]
 }
