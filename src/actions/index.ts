@@ -19,7 +19,7 @@ import {
   DecrementSpecialRetryAction,
   TrickCardsAction
 } from "../types/actionData";
-import { CardData } from "../types/goalItems";
+import { CardData } from "../types/cardTypes";
 
 export const setCards = (cards: Array<CardData>): SetCardsAction => ({
   type: ActionNames.SET_CARDS,

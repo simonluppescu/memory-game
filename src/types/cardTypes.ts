@@ -1,23 +1,11 @@
 import { Language, SpecialCardType } from "./general";
 
-export type EnglishCardData = {
-  language: Language.ENGLISH;
-  matcherId: number;
+export type LanguageCardData = {
   cardId: number;
-  englishText: string;
-  englishPartOfSpeech: string;
-};
-
-export type JapaneseCardData = {
-  language: Language.JAPANESE;
   matcherId: number;
-  cardId: number;
-  japaneseText: string;
-  japaneseHira: string;
-  japaneseLatin: string;
+  text: string;
+  language: Language;
 };
-
-export type LanguageCardData = EnglishCardData | JapaneseCardData;
 
 export type SpecialCardData = {
   cardId: number;

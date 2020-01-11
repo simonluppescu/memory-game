@@ -3,7 +3,7 @@ import React from "react";
 import CardContainer from "../containers/CardContainer";
 import GameStatsContainer from "../containers/GameStatsContainer";
 import CardTimerContainer from "../containers/CardTimerContainer";
-import { CardData } from "../types/goalItems";
+import { CardData } from "../types/cardTypes";
 
 interface Props {
   cards: Array<CardData>;

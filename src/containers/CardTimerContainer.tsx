@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 
 import CardTimer from "../components/CardTimer";
 import { AppState } from "../store/configureStore";
-import { CardData } from "../types/goalItems";
+import { CardData } from "../types/cardTypes";
 import { countDownTimer, resetTimer, endGame } from "../actions";
 
 type StateProps = {

@@ -1,7 +1,7 @@
 import produce from "immer";
 
 import { AppActions, ActionNames } from "../types/actionData";
-import { CardData } from "../types/goalItems";
+import { CardData } from "../types/cardTypes";
 
 const defaultState = {
   revealedCards: new Map<number, CardData>(),

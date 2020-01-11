@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import Card from "../components/Card";
 import { CardReducerState } from "../reducers/cardReducer";
-import { CardData, isSpecialCard, SpecialCardData, LanguageCardData, isLanguageCard } from "../types/goalItems";
+import { CardData, isSpecialCard, SpecialCardData, LanguageCardData, isLanguageCard } from "../types/cardTypes";
 import { AppState } from "../store/configureStore";
 import {
   revealCard,

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SpecialCardData, CardData } from "../types/goalItems";
+import { SpecialCardData, CardData } from "../types/cardTypes";
 
 interface Props {
   itemData: SpecialCardData;

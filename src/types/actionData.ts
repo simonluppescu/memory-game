@@ -1,4 +1,4 @@
-import { CardData } from "./goalItems";
+import { CardData } from "./cardTypes";
 
 export enum ActionNames {
   SET_CARDS = "CARDS/SET",

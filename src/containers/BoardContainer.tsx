@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import Board from "../components/Board";
 import DataProcessorService from "../services/dataProcessorService";
 import { AppState } from "../store/configureStore";
-import { CardData, isSpecialCard } from "../types/goalItems";
+import { CardData, isSpecialCard } from "../types/cardTypes";
 import { Language } from "../types/general";
 import { setRevealed, hideCards, setCards } from "../actions";
 

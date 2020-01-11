@@ -1,3 +1,20 @@
 {
-
+  "items": [
+    {
+      "english": "to say",
+      "japanese": "言う"
+    },
+    {
+      "english": "to eat",
+      "japanese": "食べる"
+    },
+    {
+      "english": "to see",
+      "japanese": "見る"
+    },
+    {
+      "english": "hello",
+      "japanese": "こんにちは"
+    }
+  ]
 }

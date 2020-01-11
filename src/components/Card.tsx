@@ -4,7 +4,7 @@ import "../styles/card.scss";
 
 import LanguageCard from "./LanguageCard";
 import SpecialCard from "./SpecialCard";
-import { CardData, isLanguageCard, LanguageCardData, isSpecialCard, SpecialCardData } from "../types/goalItems";
+import { CardData, isLanguageCard, LanguageCardData, isSpecialCard, SpecialCardData } from "../types/cardTypes";
 
 interface Props {
   isFlippedOver: boolean;
